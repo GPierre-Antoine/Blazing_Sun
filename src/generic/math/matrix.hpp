@@ -21,7 +21,7 @@ namespace pag
 
                 matrix (const pag::bs::math::geometric_point<T,D>& point=pag::bs::math::geometric_point<T,D>());
                 matrix (const matrix & other); //copy constructor
-                matrix (matrix && other); //move constructor
+//                matrix (matrix && other); //move constructor
 
                 pag::bs::math::geometric_point<T,D> operator * (const pag::bs::math::geometric_point<T,D> & other);
 
@@ -64,11 +64,11 @@ namespace pag
                 std::copy(other.grid.begin (),other.grid.end (),this->grid.begin ());
             }
 
-            template <typename T,unsigned char D, typename E>
-            matrix<T,D,E>::matrix (matrix && other)
-            {
-                swap(other,*this);
-            }
+//            template <typename T,unsigned char D, typename E>
+//            matrix<T,D,E>::matrix (matrix && other)
+//            {
+//                swap(other,*this);
+//            }
 
             template <typename T,unsigned char D, typename E>
             pag::bs::math::geometric_point<T,D> matrix<T,D,E>::operator * (const pag::bs::math::geometric_point<T, D> & other)
