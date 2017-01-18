@@ -94,6 +94,8 @@ namespace math
     geometric_point<T,D,U>::geometric_point ()
     {
         coordinates.fill (0);
+        coordinates[D] = 1;
+
     }
 
 
@@ -101,6 +103,8 @@ namespace math
     geometric_point<T,D,U>::geometric_point (std::initializer_list<T> initializer_list)
     {
         std::copy (initializer_list.begin (),initializer_list.end (),coordinates.begin ());
+        coordinates[D] = 1;
+
     }
 
     template <typename T,unsigned char D, typename U>
