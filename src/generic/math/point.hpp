@@ -181,7 +181,7 @@ namespace pag
             template <typename T,unsigned char D, typename U>
             T& geometric_point<T,D,U>::operator [] (const size_t & index) noexcept
             {
-                return const_cast<T&>(static_cast<const T &> (this->operator[] (index)));
+                return coordinates[index];
             }
             //</editor-fold>
 
