@@ -88,7 +88,7 @@ namespace pag
                     double radii = 0;
                     for (const auto &i : points)
                     {
-                        radii = max(radii,pythagore(i,center));
+                        radii = max(radii,pythagore(i.begin(),i.end(),center.begin()));
                     }
                 }
                 return radius;
