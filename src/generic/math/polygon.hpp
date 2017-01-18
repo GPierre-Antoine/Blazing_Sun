@@ -38,8 +38,16 @@ namespace pag
                 typename std::vector<pag::bs::math::geometric_point<T,D>>::iterator end ();
                 typename std::vector<pag::bs::math::geometric_point<T,D>>::const_iterator end () const;
 
+                pag::bs::math::geometric_point<T,D>& get_center () const;
+                double & get_radius () const;
+
             private:
                 std::vector<pag::bs::math::geometric_point<T,D>> points;
+
+                volatile pag::bs::math::geometric_point<T,D> center;
+                volatile double radius;
+                volatile bool should_update_center;
+                volatile bool should_update_radius;
             protected:
 
             public:
@@ -52,18 +60,52 @@ namespace pag
             {
                 using std::swap;
                 swap (first.points,second.points);
+                swap (first.center,second.center);
+                swap (first.radius,second.radius);
             }
 
+            template <typename T, unsigned char D>
+            pag::bs::math::geometric_point<T,D>& polygon<T,D>::get_center () const
+            {
+                if (should_update_center)
+                {
+                    center *=0;
+                    for (const auto & i:points)
+                    {
+                        center += i;
+                    }
+                    center /= points.size();
+                }
+                return center;
+            }
+
+            template <typename T, unsigned char D>
+            double& polygon<T,D>::get_radius () const
+            {
+                if (should_update_radius)
+                {
+                    get_center ();
+                    double radii = 0;
+                    for (const auto &i : points)
+                    {
+                        radii = max(radii,pythagore(i,center));
+                    }
+                }
+                return radius;
+            }
 
             template <typename T, unsigned char D>
             polygon<T,D>::polygon()
             {
-                points.operator= ({pag::bs::math::geometric_point<T,D>(),pag::bs::math::geometric_point<T,D>(),
-                                   pag::bs::math::geometric_point<T,D>(),pag::bs::math::geometric_point<T,D>()});
+                points.operator = ({pag::bs::math::geometric_point<T,D>(),pag::bs::math::geometric_point<T,D>(),
+                                    pag::bs::math::geometric_point<T,D>(),pag::bs::math::geometric_point<T,D>()});
+                center = pag::bs::math::geometric_point<T,D>();
+                radius=0;
             }
 
             template <typename T, unsigned char D>
-            polygon<T,D>::polygon (std::initializer_list<pag::bs::math::geometric_point<T, D>> initializer_list) : points (initializer_list)
+            polygon<T,D>::polygon (std::initializer_list<pag::bs::math::geometric_point<T, D>> initializer_list)
+                    : points (initializer_list)
             {}
 
             template <typename T, unsigned char D>
