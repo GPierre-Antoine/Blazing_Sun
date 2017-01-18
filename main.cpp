@@ -6,8 +6,8 @@
 
 int main ()
 {
-    math::polygon<int,2> blabla {{0,0},{0,1},{1,1},{1,0}};
-    for (const auto & i : blabla)
+    pag::bs::math::polygon<int,3> blabla {{0,0,0},{0,1,0},{1,1,0},{1,0,0}};
+    for (const auto& i : blabla)
     {
         for (const auto & j : i)
         {
