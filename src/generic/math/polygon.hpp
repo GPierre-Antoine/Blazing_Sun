@@ -19,9 +19,11 @@ namespace math
     class polygon
     {
     public:
+        typedef T value_type;
+
         template <typename U, unsigned char E>
         friend void swap (polygon<U,E> & first,polygon<U,E> & second);
-        polygon () = default;
+        polygon ();
         polygon (std::initializer_list<math::geometric_point<T,D>> initializer_list);
         polygon (const polygon & lvalue);
         polygon (polygon && prvalue);
@@ -29,6 +31,11 @@ namespace math
         polygon& operator= (polygon other);
 
         ~polygon();
+
+        typename std::vector<geometric_point<T,D>>::iterator begin ();
+        typename std::vector<geometric_point<T,D>>::const_iterator begin () const;
+        typename std::vector<geometric_point<T,D>>::iterator end ();
+        typename std::vector<geometric_point<T,D>>::const_iterator end () const;
 
     private:
         std::vector<math::geometric_point<T,D>> points;
@@ -46,6 +53,12 @@ namespace math
         swap (first.points,second.points);
     }
 
+
+    template <typename T, unsigned char D>
+    polygon<T,D>::polygon()
+    {
+        points.operator= ({geometric_point<T,D>(),geometric_point<T,D>(),geometric_point<T,D>(),geometric_point<T,D>()});
+    }
 
     template <typename T, unsigned char D>
     polygon<T,D>::polygon (std::initializer_list<geometric_point<T, D>> initializer_list) : points (initializer_list)
@@ -84,6 +97,28 @@ namespace math
     template <typename T>
     using polygon_3d = polygon<T,3>;
     //</editor-fold>
+
+    template <typename T, unsigned char D>
+    typename std::vector<geometric_point<T,D>>::iterator  polygon<T,D>::begin ()
+    {
+        return points.begin ();
+    }
+    template <typename T, unsigned char D>
+    typename std::vector<geometric_point<T,D>>::const_iterator  polygon<T,D>::begin () const
+    {
+        return points.begin ();
+    }
+    template <typename T, unsigned char D>
+    typename std::vector<geometric_point<T,D>>::iterator  polygon<T,D>::end ()
+    {
+        return points.end ();
+    }
+    template <typename T, unsigned char D>
+    typename std::vector<geometric_point<T,D>>::const_iterator polygon<T,D>::end () const
+    {
+        return points.end ();
+    }
+
 
 }//math
 
