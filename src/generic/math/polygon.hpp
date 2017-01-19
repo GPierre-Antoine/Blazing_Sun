@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "point.hpp"
+#include "functions.h"
 
 namespace pag
 {
@@ -85,7 +86,7 @@ namespace pag
                     double radii = 0;
                     for (const auto &i : points)
                     {
-                        radii = max(radii,pythagore(i.begin(),i.end(),center.begin()));
+                        radii = max(radii,pag::bs::math::pythagora<T*>(i.begin(),i.end(),center.begin()));
                     }
                 }
                 return radius;
