@@ -45,6 +45,9 @@ namespace pag
                 geometric_point& operator*= (unsigned number) noexcept;
                 geometric_point& operator/= (unsigned number) noexcept;
 
+                bool operator == (const geometric_point & other) const noexcept;
+                bool operator < (const geometric_point & other) const noexcept;
+
                 iterator begin ();
                 const_iterator begin () const;
                 iterator end ();
@@ -183,6 +186,25 @@ namespace pag
             {
                 return coordinates[index];
             }
+
+            template <typename T,unsigned char D, typename U>
+            bool geometric_point<T,D,U>::operator == (const geometric_point<T,D,U> & other) const noexcept
+            {
+                unsigned char i =0;
+                for (;i<D && (coordinates[i]*coordinates[D] == other[i]*other.coordinates[D]);++i);
+                return (i == D);
+            }
+
+            template <typename T,unsigned char D, typename U>
+            bool geometric_point<T,D,U>::operator < (const geometric_point<T,D,U> & other) const noexcept
+            {
+                for (unsigned char i = 0;i<D;++i)
+                {
+                    if (coordinates[i]*coordinates[D] < other.coordinates[i]*other.coordinates[D]) return true;
+                    if (coordinates[i]*coordinates[D] > other.coordinates[i]*other.coordinates[D]) return false;
+                }
+                return false;
+            }
             //</editor-fold>
 
 
@@ -222,4 +244,21 @@ namespace pag
     }//bs
 }//pag
 
+#include "constants.h"
+namespace std
+{
+
+    template <>
+    template <typename T, unsigned char D>
+    struct hash<pag::bs::math::geometric_point<T,D>>
+    {
+
+        size_t operator ()(const pag::bs::math::geometric_point<T,D>& target)
+        {
+            size_t hash_val = pag::bs::math::FNV_prime;
+            for (const auto &i: target) {hash_val ^= i; hash_val*= pag::bs::math::FNV_offset_value; }
+            return hash_val;
+        }
+    };
+}
 #endif //BLAZING_SUN_POINT_HPP
