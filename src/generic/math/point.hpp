@@ -1,5 +1,5 @@
 //
-// Created by Pierre-Antoine on 11/10/2015.
+// Created by Pierre-Antoine
 //
 
 #ifndef BLAZING_SUN_POINT_HPP
@@ -253,7 +253,7 @@ namespace std
     struct hash<pag::bs::math::geometric_point<T,D>>
     {
 
-        size_t operator ()(const pag::bs::math::geometric_point<T,D>& target)
+        size_t operator ()(const pag::bs::math::geometric_point<T,D>& target) const
         {
             size_t hash_val = pag::bs::math::FNV_prime;
             for (const auto &i: target) {hash_val ^= i; hash_val*= pag::bs::math::FNV_offset_value; }
