@@ -174,7 +174,7 @@ namespace std
     template <typename T, unsigned char D>
     struct hash<pag::bs::math::polygon<T,D>>
     {
-        size_t operator ()(const pag::bs::math::polygon<T,D>& target)
+        size_t operator ()(const pag::bs::math::polygon<T,D>& target) const
         {
             size_t hash_val = pag::bs::math::FNV_prime;
             for (const auto &i: target) {hash_val ^= hash<pag::bs::math::geometric_point<T,D>>(i); hash_val*= pag::bs::math::FNV_offset_value; }
