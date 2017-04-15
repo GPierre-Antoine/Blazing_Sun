@@ -148,7 +148,7 @@ namespace pag
             }
 
             template <typename T, unsigned char D, typename U>
-            geometric_point<T,D,U>& geometric_point<T,D,U>::operator = (geometric_point<T,D,U> other) noexcept
+            geometric_point<T,D,U>& geometric_point<T,D,U>::operator= (geometric_point<T,D,U> other) noexcept
             {
                 swap (*this,other);
                 return *this;
